@@ -20,12 +20,19 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
-    new ExtractTextPlugin("styles.css")
+    new ExtractTextPlugin("styles.css"),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    })
   ],
   module: {
     loaders: [{
       test: /\.css$/,
       loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+    }, {
+      test: /\.js$/,
+      loaders: ['babel'],
+      include: path.join(__dirname, 'src')
     }]
   }
 }
